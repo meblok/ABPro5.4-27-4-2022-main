@@ -33,35 +33,42 @@ async function recorrerPost(){
   await accionAsincrona();
   cargando.innerHTML = ``
   verPost.innerHTML = ``
+  
   arregloArticulos.map(e => {
+    let id = e.id
+    let req = `https://jsonplaceholder.typicode.com/posts/${id}`  
+    let arregloId = []
+    fetch(req)
+    .then(response=>response.json())
+    .then((data)=>{ 
     
   verPost.innerHTML+= `
   <div class="col-md-6">
       <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-success">${e.id}</strong>
-          <h3 class="mb-0">${e.title}</h3>
-          <div class="mb-1 text-muted">${e.userId}</div>
-          <p class="card-text mb-auto">${e.body}</p>
-          <a class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal${e.id}">Continuar Leyendo</a>
-          <button class="btn btn-outline-warning" onclick = "agregarFavorito('${e.title}'),toggle(this)">Agregar a Favoritos</button>
+          <strong class="d-inline-block mb-2 text-success">${data.id}</strong>
+          <h3 class="mb-0">${data.title}</h3>
+          <div class="mb-1 text-muted">${data.userId}</div>
+          <p class="card-text mb-auto">${data.body}</p>
+          <a class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal${data.id}">Continuar Leyendo</a>
+          <button class="btn btn-outline-warning" onclick = "agregarFavorito('${data.title}'),toggle(this)">Agregar a Favoritos</button>
           </div>
         <div class="col-auto d-none d-lg-block">
          
-          <a class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal${e.id}">Continuar Leyendo</a>
+          
       </div>
       <!-- Modal -->
-            <div class="modal fade" id="exampleModal${e.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal${data.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">${e.title}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">${data.title}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
-                  <p>${e.body}</p>
+                  <p>${data.body}</p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -70,7 +77,7 @@ async function recorrerPost(){
               </div>
             </div>
     </div>
-</div>`
+</div>`})
 })
 }
 
@@ -105,7 +112,7 @@ filtroPost.map((e) => {
         </div>
       <div class="col-auto d-none d-lg-block">
        
-        <a class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal${e.id}">Continuar Leyendo</a>
+        
     </div>
     <!-- Modal -->
           <div class="modal fade" id="exampleModal${e.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
